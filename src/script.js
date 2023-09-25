@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { gsap } from "gsap";
+import {element} from "three/nodes";
 
 /**
  * Loaders
@@ -134,21 +135,59 @@ const raycaster = new THREE.Raycaster();
 const points = [
   {
     position: new THREE.Vector3(1.55, 0.3, -0.6),
-    element: document.querySelector(".point-0"),
+    // element: document.querySelector(".point-0"),
   },
   {
     position: new THREE.Vector3(0.5, 0.8, -1.6),
-    element: document.querySelector(".point-1"),
+    // element: document.querySelector(".point-1"),
   },
   {
     position: new THREE.Vector3(1.6, -1.3, -0.7),
-    element: document.querySelector(".point-2"),
+    // element: document.querySelector(".point-2"),
   },
   {
     position: new THREE.Vector3(-2.2, .9, 1.4),
-    element: document.querySelector(".point-3"),
+    // element: document.querySelector(".point-3"),
   },
 ];
+
+const pointText = {
+    1: 'Front and top screen with HUD aggregating terrain and battle informations.',
+    2: 'Ventilation with air purifier and detection of environment toxicity.',
+    3: 'Cameras supporting night vision and heat vision with automatic adjustment.',
+    4: 'Damage from gun shot.'
+}
+
+let pointNumber = 1
+
+for (const point of points) {
+  //create parent div
+  const createdEl = document.createElement('div')
+  createdEl.classList.add(`point`)
+  createdEl.classList.add(`point-${pointNumber}`)
+  // createdEl.classList.add(`visible`)
+
+  // create inner label
+  const label = document.createElement('div')
+  label.classList.add('label')
+  label.innerText = pointNumber
+  createdEl.appendChild(label)
+
+  // creat text
+  const text = document.createElement('div')
+  text.classList.add('text')
+  text.innerText = pointText[pointNumber]
+  createdEl.appendChild(text)
+
+  pointNumber += 1
+  // createdEl.innerHTML = pointNumber
+  document.body.append(createdEl)
+
+
+  point.element = createdEl
+}
+console.log(points)
+
 
 /**
  * Lights
@@ -225,7 +264,7 @@ const tick = () => {
   if (sceneIsReady) {
     // Go through each point
     for (const point of points) {
-      // Dont modify the original position & get NDC
+      // Don't modify the original position & get NDC
       const screenPosition = point.position.clone();
       /**
        * project 3d point into 2d space on screen

@@ -161,26 +161,25 @@ const pointText = {
 let pointNumber = 1
 
 for (const point of points) {
-  //create parent div
+  // Create parent div
   const createdEl = document.createElement('div')
   createdEl.classList.add(`point`)
   createdEl.classList.add(`point-${pointNumber}`)
-  // createdEl.classList.add(`visible`)
 
-  // create inner label
+
+  // create Inner Label
   const label = document.createElement('div')
   label.classList.add('label')
   label.innerText = pointNumber
   createdEl.appendChild(label)
 
-  // creat text
+  // Create Text
   const text = document.createElement('div')
   text.classList.add('text')
   text.innerText = pointText[pointNumber]
   createdEl.appendChild(text)
 
   pointNumber += 1
-  // createdEl.innerHTML = pointNumber
   document.body.append(createdEl)
 
 
